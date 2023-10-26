@@ -1,10 +1,10 @@
 .app {
   max-width: 144rem;
   min-height: 100dvh;
-  border: 10px solid black;
+  /* border: 10px solid black; */
   margin: 0 auto;
   overflow: hidden;
-  background-image: url("./assets/desktop/bg-image-nighttime.jpg");
+  background-image: url("/assets/desktop/bg-image-nighttime.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -12,13 +12,18 @@
 .app-content {
   height: 100dvh;
   width: 100%;
-  border: 7px solid red;
+  /* border: 7px solid red; */
   position: relative;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
   color: var(--white);
   font-family: var(--mainFont);
+  text-shadow: 1px 1px 1px var(--black), 1px 1px 2px var(--black);
+}
+
+.dark-text {
+  color: var(--black);
 }
 
 .top-app-row,
@@ -29,7 +34,7 @@
 .top-app-row,
 .center-app-row,
 .bottom-app-row {
-  border: 4px solid limegreen;
+  /* border: 4px solid limegreen; */
 }
 
 /*TOP ROW CSS */
@@ -101,7 +106,7 @@
   display: flex;
   align-items: flex-end;
   /* justify-content: flex-end; */
-  border: 3px solid blue;
+  /* border: 3px solid blue; */
   width: 100%;
   margin: 1.6rem 0;
 }
@@ -121,6 +126,7 @@
 .btn-content {
   display: flex;
   align-items: center;
+  gap: 1.5rem;
 }
 
 /*Bottom Row CSS */
@@ -128,6 +134,33 @@
 .bottom-app-row {
   transition: 0.5s ease-in;
   transform-origin: bottom;
+  position: relative;
+}
+
+.bottom-overlay {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bottom-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+}
+
+.bottom-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  opacity: 45%;
 }
 
 .hide-bottom-row {
@@ -137,20 +170,23 @@
 
 .bottom-grid-content {
   padding: 7.4rem var(--mainPaddingX);
+  position: relative;
+  z-index: 50;
 }
 
 .bottom-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
 }
 
 .grid-container {
-  border: 3px solid purple;
+  /* border: 3px solid purple; */
 }
 
 @media screen and (max-width: 1050px) {
   .app {
-    background-image: url("./assets/tablet/bg-image-nighttime.jpg");
+    background-image: url("/assets/tablet/bg-image-nighttime.jpg");
   }
 
   .location-btn-content {
@@ -162,7 +198,7 @@
 
 @media screen and (max-width: 550px) {
   .app {
-    background-image: url("./assets/mobile/bg-image-nighttime.jpg");
+    background-image: url("/assets/mobile/bg-image-nighttime.jpg");
   }
 
   .timezone {
@@ -184,7 +220,7 @@
   }
 
   .grid-container {
-    border: 3px solid purple;
+    /* border: 3px solid purple; */
     display: flex;
     align-items: center;
     justify-content: space-between;

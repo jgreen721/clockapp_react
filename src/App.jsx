@@ -1,18 +1,40 @@
-import { useState } from 'react'
-import {refreshIcon} from "./const"
+import { useState,useRef, useEffect } from 'react'
+import {moonIcon, refreshIcon, sunIcon, arrowUpIcon, bgImageDaytime,bgImageNighttime,bgTabletImageDaytime,bgTabletImageNighttime,bgMobileImageDaytime,bgMobileImageNighttime} from "./const"
 import './App.css'
 
 function App() {
   const [showBottom,setShowBottom] = useState(false)
+  const [isDay,setIsDay] = useState(true);
+  const [quote,setQuote] = useState({author:"John Doe", quote:"It is far greater to have f-ed something up, then to have never even tried to begin with...sometimes at least, probably 🤔"})
+  const appRef = useRef();
+  
+
+
+
+  useEffect(()=>{
+
+    setBg(isDay)
+  },[]);
+
+
+  const setBg =(isDay)=>{
+      if(isDay){
+        appRef.current.style.backgroundImage = `url(${bgImageDaytime})`
+      }
+      else{
+        appRef.current.style.backgroundImage = `url(${bgImageNighttime})`
+
+      }
+  }
 
   return (
-    <div className="app">
+    <div ref={appRef} className="app">
       <div className="app-content">
         <div className={showBottom ? "top-app-row quote-row hide-top-row" : "top-app-row quote-row"}>
           <div className={showBottom ? "quote-content-container hide-quote" : "quote-content-container show-quote"}>
             <div>
-              <h5 className="thin">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam sunt adipisci fugiat cupiditate illum saepe, omnis distinctio, officiis tenetur mollitia vero excepturi!</h5>
-              <h5>john doe</h5>
+              <h5 className="thin mb-2">{quote.quote}</h5>
+              <h5>{quote.author}</h5>
             </div>
             <div>
               <img className="refresh-icon" src={refreshIcon} alt="reload" />
@@ -24,9 +46,9 @@ function App() {
             <div className="main-row-column-content">
               <div className="main-row-content-header">
                 <div>
-                  <img src="" alt="sun" />
+                  <img src={isDay ? sunIcon : moonIcon} alt="sun" />
                 </div>
-                <h4>Good morning, it's currently</h4>
+                <h4 className="uppercase thin">Good morning, it's currently</h4>
               </div>
               <div className="time-content">
                 <h1>11:37</h1>
@@ -35,11 +57,11 @@ function App() {
                 {/* </div> */}
               </div>
               <div className="location-btn-content">
-                <h3>In London, Uk</h3>
-                <button onClick={()=>setShowBottom(!showBottom)} >
+                <h3 className="uppercase thin">In London, Uk</h3>
+                <button className="btn" onClick={()=>setShowBottom(!showBottom)} >
                   <div className="btn-content">
-                    <h5>{showBottom ? "Less" : "More"}</h5>
-                    <img src="" alt="arrow" />
+                    <p className="thin uppercase">{showBottom ? "Less" : "More"}</p>
+                    <img src={arrowUpIcon} alt="arrow" />
                   </div>
                 </button>
               </div>
@@ -47,7 +69,8 @@ function App() {
           </div>
         </div>
         <div className={showBottom ?"bottom-app-row info-row" : "bottom-app-row info-row hide-bottom-row"}>
-          <div className="bottom-grid-content">
+          <div className="bottom-overlay"></div>
+          <div className={isDay ? "bottom-grid-content" : "bottom-grid-content dark-text"}>
             <div className="bottom-grid">
               <div className="grid-container">
                 <small className="small thin">Current Timezone</small>

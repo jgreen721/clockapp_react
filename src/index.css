@@ -50,6 +50,7 @@ h5 {
 p {
   font-size: 1.8rem;
   line-height: 2.8rem;
+  letter-spacing: 0.75rem;
 }
 
 .small {
@@ -62,6 +63,21 @@ p {
   font-weight: 200;
 }
 
+.uppercase {
+  text-transform: uppercase;
+}
+
+.btn {
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  padding: 1rem 1.7rem;
+}
+
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
 @media screen and (max-width: 1050px) {
   * {
     --mainPaddingX: 6.4rem;
@@ -70,6 +86,11 @@ p {
   h1 {
     font-size: 17.5rem;
     line-height: 17.5rem;
+  }
+
+  h2 {
+    font-size: 4rem;
+    line-height: 4.4rem;
   }
 }
 
