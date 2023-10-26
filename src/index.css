@@ -21,12 +21,12 @@ html {
 
 h1 {
   font-size: 20rem;
-  line-height: 20rem;
+  line-height: 15rem;
   letter-spacing: -0.5px;
 }
 
 h2 {
-  font-size: 2.4rem;
+  font-size: 5.6rem;
   line-height: 6.8rem;
 }
 
@@ -56,4 +56,35 @@ p {
   font-size: 1.5rem;
   line-height: 2.8rem;
   letter-spacing: -0.3px;
+}
+
+.thin {
+  font-weight: 200;
+}
+
+@media screen and (max-width: 1050px) {
+  * {
+    --mainPaddingX: 6.4rem;
+  }
+
+  h1 {
+    font-size: 17.5rem;
+    line-height: 17.5rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  * {
+    --mainPaddingX: 2.6rem;
+  }
+
+  h1 {
+    font-size: 10rem;
+    line-height: 10rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+    line-height: 2rem;
+  }
 }
