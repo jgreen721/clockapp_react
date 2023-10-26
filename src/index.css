@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500;900&family=Pixelify+Sans&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+:root {
+  --black: #000000;
+  --lightblack: #303030;
+  --white: #ffffff;
+  --mainFont: "Inter", sans-serif;
+  --funFont: "Pixelify Sans", sans-serif;
+  --mainPaddingX: 16.5rem;
+}
