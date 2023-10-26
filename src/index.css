@@ -18,3 +18,42 @@ html {
   --funFont: "Pixelify Sans", sans-serif;
   --mainPaddingX: 16.5rem;
 }
+
+h1 {
+  font-size: 20rem;
+  line-height: 20rem;
+  letter-spacing: -0.5px;
+}
+
+h2 {
+  font-size: 2.4rem;
+  line-height: 6.8rem;
+}
+
+h3 {
+  font-size: 2.4rem;
+  line-height: 2.8rem;
+  letter-spacing: -0.48px;
+}
+
+h4 {
+  font-size: 2rem;
+  line-height: 2.8rem;
+  letter-spacing: 0.4rem;
+}
+
+h5 {
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+p {
+  font-size: 1.8rem;
+  line-height: 2.8rem;
+}
+
+.small {
+  font-size: 1.5rem;
+  line-height: 2.8rem;
+  letter-spacing: -0.3px;
+}
