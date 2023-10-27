@@ -24,6 +24,7 @@
 
 .dark-text {
   color: var(--black);
+  text-shadow: 1px 1px 10px var(--white);
 }
 
 .top-app-row,
@@ -158,7 +159,7 @@
   height: 100%;
 }
 
-.bottom-overlay::before {
+.black-overlay::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -167,13 +168,34 @@
   backdrop-filter: blur(5px);
 }
 
-.bottom-overlay::after {
+.black-overlay::after {
   content: "";
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   background: var(--black);
+  /* background: gray; */
+  opacity: 45%;
+}
+
+.gray-overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(5px);
+}
+
+.gray-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* background: var(--black); */
+  background: gray;
   opacity: 45%;
 }
 
@@ -193,17 +215,6 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem 5rem;
   position: relative;
-}
-
-.bottom-grid::after {
-  content: "";
-  height: 100%;
-  width: 1px;
-  background: white;
-  position: absolute;
-  left: 47%;
-  opacity: 45%;
-  filter: blur(2px);
 }
 
 .grid-container {

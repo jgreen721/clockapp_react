@@ -4,29 +4,74 @@ import './App.css'
 
 function App() {
   const [showBottom,setShowBottom] = useState(false)
-  const [isDay,setIsDay] = useState(true);
-  const [quote,setQuote] = useState({author:"John Doe", quote:"It is far greater to have f-ed something up, then to have never even tried to begin with...sometimes at least, probably 🤔"})
-  const [hour,setHour] = useState(new Date(Date.now()).toLocaleTimeString().split(":")[0])
-  const [minute,setMinute] = useState(new Date(Date.now()).toLocaleTimeString().split(":")[1])
+  const [isDay,setIsDay] = useState(false);
+  const [quote,setQuote] = useState({author:"John Doe", quote:"It is far greater to have f-ed something up, then to have never even tried to begin with...sometimes at least, probably 🤔"});
+  const [greeting,setGreeting] = useState("Good Morning");
+  const [hours,setHours] = useState(new Date(Date.now()).toLocaleTimeString().split(":")[0])
+  const [minutes,setMinutes] = useState(new Date(Date.now()).toLocaleTimeString().split(":")[1])
+  const [seconds,setSeconds] = useState(new Date().getSeconds());
+
+  const [timeZone,setTimeZone] = useState("California, US")
+  const [location,setLocation] = useState("Los Angeles,US")
   const dayOfWeek = new Date().getDay();
   const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
   const weekNumber = Math.ceil(dayOfYear / 7);
   const appRef = useRef();
-  
+  const APIKEY="ipb_live_ePBubTZSZcigrSKezY91ix2NpskHnm7lAAE1uOZR"
+  const locationURL = `https://api.ipbase.com/v2/info`;
   const quoteURL = `https://api.quotable.io/random`
+
+
+  console.log(seconds)
 
 
 
 
   useEffect(()=>{
     // fetchQuote();
+    // fetchLocation()
     determineIfDay();
-    // if(isDay != null){
-    //   console.log("IsDay",isDay)
     setBg();
-    console.log(new Date(Date.now()).toLocaleTimeString());
-    // }
+    
   },[isDay]);
+
+
+  const fetchLocation = async()=>{
+    let response = await fetch(`${locationURL}?apikey=${APIKEY}`);
+    response = await response.json();
+    console.log(response,response.data.timezone.id)
+    setTimeZone(response.data.timezone.id);
+    setLocation(response.data.location.city.name + "," + response.data.location.country.alpha2)
+}
+
+
+  useEffect(()=>{
+
+    let timerInt = setInterval(()=>{
+      
+      let tempSeconds = seconds;
+      let tempMinutes = minutes;
+      let tempHours = hours;
+      tempSeconds++;
+      if(tempSeconds == 60){
+        tempSeconds = 0;
+        tempMinutes++;
+        if(tempMinutes == 60){
+          tempMinutes = 0;
+          tempHours++;
+          if(tempHours > 12){
+            tempHours = 1;
+          }
+        }
+      }
+      setSeconds(tempSeconds);
+      setMinutes(tempMinutes);
+      setHours(tempHours);
+      
+    },1000);
+
+    return ()=>clearInterval(timerInt);
+  })
 
 
   const setBg =()=>{
@@ -41,13 +86,18 @@ function App() {
 
   const determineIfDay = ()=>{
     let hours = new Date().getHours();
-    console.log("HOURS",hours)
+    // console.log("HOURS",hours)
 
     if(hours > 7 && hours < 18)setIsDay(true)
     else {
       console.log("nightime!!");
       setIsDay(false);
     }
+
+    if(hours < 10)setGreeting("Good Morning");
+    else if(hours < 15)setGreeting("Good Afternoon");
+    else if(hours < 20) setGreeting("Good Evening");
+    else setGreeting("Zzzzzz 😴")
 
   }
 
@@ -112,16 +162,16 @@ function App() {
                 <div>
                   <img src={isDay ? sunIcon : moonIcon} alt="sun" />
                 </div>
-                <h4 className="uppercase thin">Good morning, it's currently</h4>
+                <h4 className="uppercase thin">{greeting}, it's currently</h4>
               </div>
               <div className="time-content">
-                <h1>{hour}:{minute}</h1>
+                <h1>{hours}:{minutes.toString().padStart(2,"0")}</h1>
                 {/* <div> */}
                 <h3 className="timezone thin">BST</h3>
                 {/* </div> */}
               </div>
               <div className="location-btn-content">
-                <h3 className="uppercase thin">In London, Uk</h3>
+                <h3 className="uppercase thin">In {location}</h3>
                 <button className="btn" onClick={()=>setShowBottom(!showBottom)} >
                   <div className="btn-content">
                     <p className="thin uppercase">{showBottom ? "Less" : "More"}</p>
@@ -133,12 +183,12 @@ function App() {
           </div>
         </div>
         <div className={showBottom ?"bottom-app-row info-row" : "bottom-app-row info-row hide-bottom-row"}>
-          <div className="bottom-overlay"></div>
+          <div className={isDay ? "bottom-overlay gray-overlay" : "bottom-overlay black-overlay"}></div>
           <div className={isDay ? "bottom-grid-content dark-text" : "bottom-grid-content"}>
             <div className="bottom-grid">
               <div className="grid-container">
                 <small className="small thin">Current Timezone</small>
-                <h2>Europe/London</h2>
+                <h2>{timeZone}</h2>
               </div>
               <div className="grid-container">
                 <small className="small thin">Days of the Week</small>
