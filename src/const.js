@@ -5,6 +5,7 @@ export const arrowUpIcon = "./assets/desktop/icon-arrow-up.svg";
 export const moonIcon = "./assets/desktop/icon-moon.svg";
 export const sunIcon = "./assets/desktop/icon-sun.svg";
 export const refreshIcon = "./assets/desktop/icon-refresh.svg";
+export const darkRefreshIcon = "./assets/desktop/icon-refresh-dark.svg";
 
 //tablet
 export const bgTabletImageDaytime = "./assets/tablet/bg-image-daytime.jpg";

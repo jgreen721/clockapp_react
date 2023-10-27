@@ -1,5 +1,5 @@
 import { useState,useRef, useEffect } from 'react'
-import {moonIcon, refreshIcon, sunIcon, arrowUpIcon, bgImageDaytime,bgImageNighttime,bgTabletImageDaytime,bgTabletImageNighttime,bgMobileImageDaytime,bgMobileImageNighttime} from "./const"
+import {moonIcon, refreshIcon,darkRefreshIcon, sunIcon, arrowUpIcon, bgImageDaytime,bgImageNighttime,bgTabletImageDaytime,bgTabletImageNighttime,bgMobileImageDaytime,bgMobileImageNighttime} from "./const"
 import './App.css'
 
 function App() {
@@ -17,23 +17,23 @@ function App() {
   const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
   const weekNumber = Math.ceil(dayOfYear / 7);
   const appRef = useRef();
-  const APIKEY="ipb_live_ePBubTZSZcigrSKezY91ix2NpskHnm7lAAE1uOZR"
-  const locationURL = `https://api.ipbase.com/v2/info`;
-  const quoteURL = `https://api.quotable.io/random`
+  const quoteRef = useRef();
+  const APIKEY=import.meta.env.VITE_REACT_APP_API_KEY
+  const locationURL = import.meta.env.VITE_REACT_APP_LOCATION_URL
+  const quoteURL = import.meta.env.VITE_REACT_APP_QUOTE_URL
 
 
-  console.log(seconds)
 
 
 
 
   useEffect(()=>{
-    // fetchQuote();
-    // fetchLocation()
-    determineIfDay();
+      fetchQuote();
+      fetchLocation()
+      determineIfDay();
     setBg();
     
-  },[isDay]);
+  },[]);
 
 
   const fetchLocation = async()=>{
@@ -102,7 +102,6 @@ function App() {
   }
 
   onresize=(e)=>{
-    console.log(innerWidth)
     if(innerWidth > 1050){
       if(isDay){
         appRef.current.style.backgroundImage = `url(${bgImageDaytime})`
@@ -140,18 +139,35 @@ function App() {
     setQuote({author:response.author,quote:response.content})
   }
 
+  const fetchNewQuote=async()=>{
+      if(quoteRef.current.classList.contains("fade-out"))return;
+      if(quoteRef.current.classList.contains("fade-in")){
+        quoteRef.current.classList.remove("fade-in");
+
+      }
+      quoteRef.current.classList.add("fade-out");
+      setTimeout(async()=>{
+            await fetchQuote();
+            quoteRef.current.classList.add("fade-in");
+            quoteRef.current.classList.remove("fade-out");
+
+      },2500);
+
+
+  }
+
 
   return (
     <div ref={appRef} className="app">
       <div className="app-content">
-        <div className={showBottom ? "top-app-row quote-row hide-top-row" : "top-app-row quote-row"}>
+        <div ref={quoteRef} className={showBottom ? "top-app-row quote-row hide-top-row" : "top-app-row quote-row"}>
           <div className={showBottom ? "quote-content-container hide-quote" : "quote-content-container show-quote"}>
             <div>
               <h5 className="thin mb-2">{quote.quote}</h5>
               <h5>{quote.author}</h5>
             </div>
-            <div>
-              <img className="refresh-icon" src={refreshIcon} alt="reload" />
+            <div onClick={fetchNewQuote}>
+              <img className="refresh-icon" src={isDay ? darkRefreshIcon : refreshIcon} alt="reload" />
             </div>
           </div>
         </div>
@@ -159,8 +175,8 @@ function App() {
           <div className="main-row-column">
             <div className="main-row-column-content">
               <div className="main-row-content-header">
-                <div>
-                  <img src={isDay ? sunIcon : moonIcon} alt="sun" />
+                <div className="day-icon-div">
+                  <img className="day-icon" src={isDay ? sunIcon : moonIcon} alt="sun" />
                 </div>
                 <h4 className="uppercase thin">{greeting}, it's currently</h4>
               </div>
@@ -188,19 +204,19 @@ function App() {
             <div className="bottom-grid">
               <div className="grid-container">
                 <small className="small thin">Current Timezone</small>
-                <h2>{timeZone}</h2>
+                <h2 style={{"--i":".5s"}} className={showBottom ? "scale-el" : "shrink-el"}>{timeZone}</h2>
               </div>
               <div className="grid-container">
                 <small className="small thin">Days of the Week</small>
-                <h2>{dayOfWeek}</h2>
+                <h2 style={{"--i":"1s"}} className={showBottom ? "scale-el" : "shrink-el"}>{dayOfWeek}</h2>
               </div>
               <div className="grid-container">
                 <small className="small thin">Days of the Year</small>
-                <h2>{dayOfYear}</h2>
+                <h2 style={{"--i":"1.5s"}} className={showBottom ? "scale-el" : "shrink-el"}>{dayOfYear}</h2>
               </div>
               <div className="grid-container">
                 <small className="small thin">Week number</small>
-                <h2>{weekNumber}</h2>
+                <h2 style={{"--i":"2s"}} className={showBottom ? "scale-el" : "shrink-el"}>{weekNumber}</h2>
               </div>
             </div>
           </div>
