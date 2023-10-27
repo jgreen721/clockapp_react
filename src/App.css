@@ -4,13 +4,13 @@
   /* border: 10px solid black; */
   margin: 0 auto;
   overflow: hidden;
-  background-image: url("/assets/desktop/bg-image-nighttime.jpg");
+  /* background-image: url("/assets/desktop/bg-image-nighttime.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .app-content {
-  height: 100dvh;
+  min-height: 100dvh;
   width: 100%;
   /* border: 7px solid red; */
   position: relative;
@@ -89,8 +89,14 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-end;
-
+  transition: 0.5s ease;
   padding-bottom: 9rem;
+  /* transform: translateY(100%); */
+}
+
+.elevate-center {
+  transform: translateY(0%);
+  padding: 5.6rem var(--mainPaddingX);
 }
 
 .main-row-column {
@@ -129,10 +135,18 @@
   gap: 1.5rem;
 }
 
+.arrow-icon {
+  transition: 0.5s ease;
+}
+
+.rotate-arrow {
+  transform: rotate(180deg);
+}
+
 /*Bottom Row CSS */
 
 .bottom-app-row {
-  transition: 0.5s ease-in;
+  transition: 0.5s ease;
   transform-origin: bottom;
   position: relative;
 }
@@ -177,16 +191,34 @@
 .bottom-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 1.5rem 5rem;
+  position: relative;
+}
+
+.bottom-grid::after {
+  content: "";
+  height: 100%;
+  width: 1px;
+  background: white;
+  position: absolute;
+  left: 47%;
+  opacity: 45%;
+  filter: blur(2px);
 }
 
 .grid-container {
   /* border: 3px solid purple; */
 }
 
+.grid-container:nth-child(2),
+.grid-container:nth-child(4) {
+  /* border: 2px solid red; */
+  /* text-align: end; */
+}
+
 @media screen and (max-width: 1050px) {
   .app {
-    background-image: url("/assets/tablet/bg-image-nighttime.jpg");
+    /* background-image: url("/assets/tablet/bg-image-nighttime.jpg"); */
   }
 
   .location-btn-content {
@@ -194,11 +226,19 @@
     align-items: flex-start;
     gap: 8rem;
   }
+
+  .bottom-grid {
+    gap: 1.5rem;
+  }
+
+  .bottom-grid::after {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 550px) {
   .app {
-    background-image: url("/assets/mobile/bg-image-nighttime.jpg");
+    /* background-image: url("/assets/mobile/bg-image-nighttime.jpg"); */
   }
 
   .timezone {
@@ -210,6 +250,7 @@
   .location-btn-content {
     gap: 4.8rem;
   }
+
   .bottom-grid {
     display: grid;
     grid-template-columns: repeat(1, 1fr);
