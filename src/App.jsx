@@ -33,7 +33,7 @@ function App() {
       determineIfDay();
     setBg();
     
-  },[]);
+  },[isDay]);
 
 
   const fetchLocation = async()=>{
